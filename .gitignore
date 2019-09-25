@@ -1,0 +1,8 @@
+data/*
+node/.ssh/deploy_id
+*.pub
+node/.ssh/id_rsa
+node/.ssh/known_hosts
+php7-fpm/.ssh/deploy_id
+php7-fpm/.ssh/id_rsa
+php7-fpm/.ssh/known_hosts

@@ -1,0 +1,63 @@
+version: '3'
+services:
+    ntsphpserver:
+        tty: true
+        container_name: ntsphpserver
+        build: php7-fpm
+        ports:
+            - 127.0.0.1:9000:9000
+        networks:
+            - appnet
+        links:
+            - nts-db:mysqldb
+        volumes:
+            - ../:/var/www/
+            - ./data/log/nginx:/var/log/nginx
+        depends_on:
+            - nts-db            
+    nts-nginx:
+        container_name: ntsnginx
+        build: nginx
+        ports:
+            - 127.0.0.1:80:80
+        networks:
+            appnet:
+        links:
+            - ntsphpserver
+        depends_on:
+            - nts-db
+        volumes:
+            - ../:/var/www
+            - ./data/logs/nginx/:/var/log/nginx
+
+    nts-db:
+        container_name: nts-db
+        build: nts-db
+        ports:
+            - 127.0.0.1:3352:3306
+        networks:
+            - appnet
+        volumes:
+            - ./data/nts-db:/var/lib/mysql
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+            MYSQL_DATABASE: nts-db
+            MYSQL_USER: laravel
+            MYSQL_PASSWORD: secret 
+    nodejs:
+        tty: true
+        container_name: nodejs
+        build: node
+        ports:
+            - 127.0.0.1:3001:3001
+            - 127.0.0.1:9001:9001
+            - 127.0.0.1:3000:3000
+            - 127.0.0.1:8080:8080
+        networks:
+            - appnet
+        volumes:
+            - ../:/var/www
+            - ./data/logs/nginx/:/var/log/nginx     
+networks:
+    appnet:
+        driver: "bridge"
