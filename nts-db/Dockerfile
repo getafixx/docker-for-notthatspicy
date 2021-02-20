@@ -1,4 +1,4 @@
-FROM mysql:5.6.37
+FROM mysql:5.7.30
 
 RUN apt-get upgrade
 
@@ -14,4 +14,4 @@ RUN "date"
 COPY ./.bashrc /root/.bashrc
 RUN touch /root/.bash_history
 
-WORKDIR /var/www/gastfreund-sso
+WORKDIR /var/www/

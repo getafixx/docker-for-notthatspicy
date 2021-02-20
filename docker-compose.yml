@@ -12,7 +12,9 @@ services:
             - nts-db:mysqldb
         volumes:
             - ../:/var/www/
-            - ./data/log/nginx:/var/log/nginx
+            - O:/ss:/var/www/ss
+            - C:/1web/1personal_domains/torrents.local:/var/www/torrents.local
+            - O:/torrents/torrents:/var/www/torrents
         depends_on:
             - nts-db            
     nts-nginx:
@@ -28,7 +30,7 @@ services:
             - nts-db
         volumes:
             - ../:/var/www
-            - ./data/logs/nginx/:/var/log/nginx
+            - ./data/log/nginx/:/var/log/nginx
 
     nts-db:
         container_name: nts-db
@@ -56,8 +58,15 @@ services:
         networks:
             - appnet
         volumes:
-            - ../:/var/www
-            - ./data/logs/nginx/:/var/log/nginx     
+            - ../:/var/www   
+    ntsocr:
+        tty: true
+        container_name: ntsocr
+        build: ntsocr
+        networks:
+            - appnet
+        volumes:
+            - ../:/var/www   
 networks:
     appnet:
         driver: "bridge"
