@@ -16,11 +16,11 @@ RUN apt-get install -y php7.4
 
 RUN apt-get update
 
-RUN apt-get install -y libxml2-dev php7.4-curl php7.4-dev php7.4-gd php7.4-mbstring \
-		php7.4-zip php7.4-mysql php7.4-xml php7.4-fpm php7.4-imagick php7.2-sqlite \
-		php7.4-tidy php7.4-xmlrpc php7.4-intl php7.4-json \
+RUN apt-get install -y php7.4-curl php7.4-gd php7.4-mbstring \
+		php7.4-zip php7.4-mysql php7.4-xml php7.4-fpm php7.4-imagick \
+		php7.4-tidy php7.4-intl php7.4-json \
 		php7.4-cli php7.4-common php7.4-cgi php7.4-xdebug \
-    	php-pear php7.4-gmp php7.4-bcmath php-soap  
+    	php-pear php7.4-gmp php7.4-bcmath php-soap 
 		
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data        
 RUN sed -i 's/short_open_tag = Off/short_open_tag = On/' /etc/php/7.4/fpm/php.ini
