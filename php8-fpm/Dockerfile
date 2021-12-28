@@ -35,11 +35,12 @@ COPY ./.gitconfig /root/.gitconfig
 RUN touch /root/.bash_history
 
 #git ssh set up for pulling and pushing
+RUN mkdir /root/.ssh
 COPY ./.ssh/id* /root/.ssh/
 RUN chmod -R 600  /root/.ssh
 
 # SSMTP settings
-COPY ./ssmtp.conf /etc/ssmtp/ssmtp.conf
+#COPY ./ssmtp.conf /etc/ssmtp/ssmtp.conf
 
 RUN curl -LO https://deployer.org/deployer.phar
 RUN mv deployer.phar /usr/local/bin/dep
