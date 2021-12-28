@@ -3,7 +3,7 @@ services:
     ntsphpserver:
         tty: true
         container_name: ntsphpserver
-        build: php7-fpm
+        build: php8-fpm
         ports:
             - 127.0.0.1:9000:9000
         networks:
@@ -12,9 +12,6 @@ services:
             - nts-db:mysqldb
         volumes:
             - ../:/var/www/
-            - O:/ss:/var/www/ss
-            - C:/1web/1personal_domains/torrents.local:/var/www/torrents.local
-            - O:/torrents/torrents:/var/www/torrents
         depends_on:
             - nts-db            
     nts-nginx:
@@ -31,7 +28,6 @@ services:
         volumes:
             - ../:/var/www
             - ./data/log/nginx/:/var/log/nginx
-
     nts-db:
         container_name: nts-db
         build: nts-db
@@ -46,27 +42,6 @@ services:
             MYSQL_DATABASE: nts-db
             MYSQL_USER: laravel
             MYSQL_PASSWORD: secret 
-    nodejs:
-        tty: true
-        container_name: nodejs
-        build: node
-        ports:
-            - 127.0.0.1:3001:3001
-            - 127.0.0.1:9001:9001
-            - 127.0.0.1:3000:3000
-            - 127.0.0.1:8080:8080
-        networks:
-            - appnet
-        volumes:
-            - ../:/var/www   
-    ntsocr:
-        tty: true
-        container_name: ntsocr
-        build: ntsocr
-        networks:
-            - appnet
-        volumes:
-            - ../:/var/www   
 networks:
     appnet:
         driver: "bridge"

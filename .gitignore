@@ -6,3 +6,6 @@ node/.ssh/known_hosts
 php7-fpm/.ssh/deploy_id
 php7-fpm/.ssh/id_rsa
 php7-fpm/.ssh/known_hosts
+php8-fpm/.ssh/deploy_id
+php8-fpm/.ssh/id_rsa
+php8-fpm/.ssh/known_hosts
