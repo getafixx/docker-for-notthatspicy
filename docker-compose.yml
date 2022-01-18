@@ -11,22 +11,22 @@ services:
         links:
             - nts-db:mysqldb
         volumes:
-            - ../:/var/www/
+            - ../:/workspaces/code/
         depends_on:
-            - nts-db            
+            - nts-db
     nts-nginx:
         container_name: ntsnginx
         build: nginx
         ports:
             - 127.0.0.1:80:80
         networks:
-            appnet:
+            - appnet
         links:
             - ntsphpserver
         depends_on:
             - nts-db
         volumes:
-            - ../:/var/www
+            - ../:/workspaces/code
             - ./data/log/nginx/:/var/log/nginx
     nts-db:
         container_name: nts-db
@@ -41,7 +41,7 @@ services:
             MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
             MYSQL_DATABASE: nts-db
             MYSQL_USER: laravel
-            MYSQL_PASSWORD: secret 
+            MYSQL_PASSWORD: secret
 networks:
     appnet:
         driver: "bridge"

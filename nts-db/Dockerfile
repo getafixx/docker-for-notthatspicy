@@ -14,4 +14,4 @@ RUN "date"
 COPY ./.bashrc /root/.bashrc
 RUN touch /root/.bash_history
 
-WORKDIR /var/www/
+WORKDIR /workspaces/code/

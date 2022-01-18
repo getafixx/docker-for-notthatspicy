@@ -60,5 +60,5 @@ USER ${SVC_USER}
 COPY ./.bashrc /home/${SVC_USER}/.bashrc
 COPY ./.gitconfig /home/${SVC_USER}/.gitconfig
 
-WORKDIR /var/www/
+WORKDIR /workspaces/code/
 ENTRYPOINT ["node"];

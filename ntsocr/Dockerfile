@@ -28,4 +28,4 @@ RUN apt-get -y install \
 # no more lines below this one
 COPY ./.bashrc /root/.bashrc
 
-WORKDIR /var/www/ocr
+WORKDIR /workspaces/code/ocr
