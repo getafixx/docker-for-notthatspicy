@@ -13,21 +13,25 @@ RUN apt-get install -y \
 RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update
 
-RUN apt-get install -y --fix-missing php${PHP_VERSION} php${PHP_VERSION}-curl php${PHP_VERSION}-gd php${PHP_VERSION}-mbstring \
-	php${PHP_VERSION}-zip php${PHP_VERSION}-mysql php${PHP_VERSION}-xml php${PHP_VERSION}-fpm php${PHP_VERSION}-imagick \
-	php${PHP_VERSION}-tidy php${PHP_VERSION}-intl php${PHP_VERSION}-json \
-	php${PHP_VERSION}-cli php${PHP_VERSION}-common php${PHP_VERSION}-cgi php${PHP_VERSION}-xdebug \
-	php${PHP_VERSION}-gmp php${PHP_VERSION}-bcmath ffmpeg ocrmypdf python3-pip
-
-RUN usermod -u 1000 vscode && groupmod -g 1000 vscode    
+RUN apt-get install -y --fix-missing php8.0 php8.0-common php8.0-cli \
+	php8.0-curl php8.0-gd php8.0-mbstring \
+	php8.0-zip php8.0-mysql php8.0-xml php8.0-fpm php8.0-imagick \
+	php8.0-tidy php8.0-intl php8.0-sqlite3 php8.0-cgi php8.0-xdebug \
+	php8.0-gmp php8.0-bcmath ffmpeg ocrmypdf python3-pip
 
 RUN sed -i 's/short_open_tag = Off/short_open_tag = On/' /etc/php/8.0/fpm/php.ini
 RUN sed -i 's/post_max_size = 8M/post_max_size = 50M/' /etc/php/8.0/fpm/php.ini
 RUN sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 50M/' /etc/php/8.0/fpm/php.ini
-
+RUN update-alternatives --set php /usr/bin/php8.0
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --2
 
+RUN curl -LO https://deployer.org/deployer.phar
+RUN mv deployer.phar /usr/local/bin/dep
+RUN chmod +x /usr/local/bin/dep
+
+RUN groupadd --gid 1000 vscode \
+	&& useradd --uid 1000 --gid vscode --shell /bin/bash --create-home -g root -G sudo  -G www-data vscode
 # handy for Justin
 COPY ./.bashrc /root/.bashrc
 COPY ./.gitconfig /root/.gitconfig
@@ -39,11 +43,17 @@ RUN mkdir /root/.ssh
 COPY ./.ssh/id* /root/.ssh/
 RUN chmod -R 600  /root/.ssh
 
-# SSMTP settings
-#COPY ./ssmtp.conf /etc/ssmtp/ssmtp.conf
+# handy for Justin
+COPY ./.bashrc /home/vscode/.bashrc
+COPY ./.gitconfig /home/vscode/.gitconfig
 
-RUN curl -LO https://deployer.org/deployer.phar
-RUN mv deployer.phar /usr/local/bin/dep
-RUN chmod +x /usr/local/bin/dep
+RUN touch /home/vscode/.bash_history
+
+#git ssh set up for pulling and pushing
+RUN mkdir /home/vscode/.ssh
+COPY ./.ssh/id* /home/vscode/.ssh/
+RUN chmod -R 600  /home/vscode/.ssh
+RUN chown -R vscode:vscode  /home/vscode/
+
 
 WORKDIR /workspaces/code/
