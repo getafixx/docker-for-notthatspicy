@@ -12,9 +12,8 @@ ADD ./conf/*.conf /etc/nginx/sites-available/
 
 #setup nginx stuff
 RUN ln -s /etc/nginx/sites-available/notthatspicy.local.conf /etc/nginx/sites-enabled/notthatspicy.local.conf
-#RUN ln -s /etc/nginx/sites-available/crudtest.local.conf /etc/nginx/sites-enabled/crudtest.local.conf
-RUN ln -s /etc/nginx/sites-available/torrents.local.conf /etc/nginx/sites-enabled/torrents.local.conf
-RUN ln -s /etc/nginx/sites-available/deploy.notthatspicy.local.conf /etc/nginx/sites-enabled/deploy.notthatspicy.local.conf
+RUN ln -s /etc/nginx/sites-available/art.notthatspicy.local.conf /etc/nginx/sites-enabled/art.notthatspicy.local.conf
+
 
 CMD ["nginx"]
 
