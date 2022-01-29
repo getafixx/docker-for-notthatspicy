@@ -1,0 +1,3 @@
+docker build -t getafixx-php8-fpm .
+docker tag getafixx-php8-fpm  getafixx/php8-fpm:latest
+docker push getafixx/php8-fpm:latest

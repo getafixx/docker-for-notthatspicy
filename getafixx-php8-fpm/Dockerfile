@@ -1,4 +1,4 @@
-FROM phpdockerio/php:8.0-fpm
+FROM phpdockerio/php80-fpm
 
 RUN apt-get update
 
