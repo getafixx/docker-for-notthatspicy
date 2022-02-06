@@ -12,6 +12,7 @@ services:
             - nts-db:mysqldb
         volumes:
             - ../:/workspaces/code/
+            - ../:/var/www/
         depends_on:
             - nts-db
     nts-nginx:
@@ -27,6 +28,7 @@ services:
             - nts-db
         volumes:
             - ../:/workspaces/code
+            - ../:/var/www/
             - ./data/log/nginx/:/var/log/nginx
     nts-db:
         container_name: nts-db
